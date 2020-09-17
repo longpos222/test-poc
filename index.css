@@ -1,0 +1,14 @@
+* {
+  font-family: "Monaco", sans-serif;
+  text-align: center;
+}
+
+button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+input {
+  border-radius: 15%;
+}

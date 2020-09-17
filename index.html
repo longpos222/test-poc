@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>POC test</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+      function onSubmit(token) {
+        location.href = "/register.html";
+      }
+    </script>
+  </head>
+  <body>
+    <form>
+      <br />
+      <button
+        class="g-recaptcha"
+        data-sitekey="6LcAC80ZAAAAACdjl23tnYGfXrzMSEvbgz6_EEO3"
+        data-callback="onSubmit"
+      >
+        Click here to sell your stuffs!
+      </button>
+      <br />
+    </form>
+  </body>
+</html>

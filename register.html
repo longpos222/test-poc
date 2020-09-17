@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>POC test</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+  </head>
+  <body>
+    <label for="phoneNumber">Your phone number: </label>
+    <input type="text" id="phoneNumber" />
+    <button id="get-otp-button" onclick="getOtp()">Get your OTP</button>
+    <br />
+    <br />
+    <label for="otpCode">Your OTP code: </label>
+    <input type="text" id="otpCode" />
+    <button id="submit-otp-button" onclick="submitOtp()">Submit</button>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyBky4SnIelEeKrHZibr-rw4bawnDg9H83k",
+        authDomain: "lacxoonglacxoong.firebaseapp.com",
+        databaseURL: "https://lacxoonglacxoong.firebaseio.com",
+        projectId: "lacxoonglacxoong",
+        storageBucket: "lacxoonglacxoong.appspot.com",
+        messagingSenderId: "550253875055",
+        appId: "1:550253875055:web:ebdc1a9aa7f169a1e3a29a",
+        measurementId: "G-9K5CEH12YG",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+        "get-otp-button",
+        {
+          size: "invisible",
+          callback: function (response) {
+            getOtp();
+          },
+        }
+      );
+
+      function getOtp() {
+        var phoneNumber = "+84".concat(
+          document.getElementById("phoneNumber").value.toString().slice(1, 10)
+        );
+
+        var appVerifier = window.recaptchaVerifier;
+
+        firebase
+          .auth()
+          .signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then(function (confirmationResult) {
+            window.confirmationResult = confirmationResult;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+
+      function submitOtp() {
+        var otpCode = document.getElementById("otpCode").value;
+
+        confirmationResult
+          .confirm(otpCode)
+          .then(function (result) {
+            var user = result.user;
+            console.log(user);
+            location.href = "/auth.html";
+            //
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    </script>
+  </body>
+</html>
